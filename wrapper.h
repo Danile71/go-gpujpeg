@@ -29,5 +29,5 @@ void free_gpujpeg_parameters(gogpujpeg_parameters p);
 gogpujpeg_image_parameters malloc_gpujpeg_image_parameters();
 void free_gpujpeg_image_parameters(gogpujpeg_image_parameters p);
 
-uint8_t * encode(gogpujpeg_encoder encoder,gogpujpeg_parameters param, gogpujpeg_image_parameters param_image,uint8_t* data ,int *image_compressed_size);
+uint8_t * encode(struct gpujpeg_encoder *encoder,gogpujpeg_parameters param, gogpujpeg_image_parameters param_image,uint8_t* data ,int *image_compressed_size);
 #endif /* WRAPPER_H */

@@ -31,7 +31,7 @@ func CreateEncoder() (*Encoder, error) {
 func (e *Encoder) Encode(image []byte, param *Param, paramImage *ParamImage) (data []byte, err error) {
 	size := C.int(0)
 	result := C.encode(e.encoder, param.param, paramImage.param, (*C.uchar)(unsafe.Pointer(&image[0])), &size)
-
+	C.fflush(C.stdout)
 	if size == C.int(0) {
 		return nil, errors.New("Can't encode")
 	}

@@ -58,8 +58,8 @@ func (p *Param) SetInterleaved(i int) {
 	p.param.interleaved = C.int(i)
 }
 
-func (p *Param) SetColorSpaceInternal(c uint32) {
-	p.param.color_space_internal = c
+func (p *Param) SetColorSpaceInternal(c ColorSpace) {
+	p.param.color_space_internal = uint32(c)
 }
 
 func (p *Param) SetQuality(q int) {
