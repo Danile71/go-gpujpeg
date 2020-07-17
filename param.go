@@ -19,9 +19,9 @@ type Param struct {
 func SetParam() *Param {
 	p := &Param{}
 	C.gpujpeg_set_default_parameters(&p.param)
-	p.param.restart_interval = 1
-	p.param.interleaved = 1
-	p.param.color_space_internal = 82
+	// p.param.restart_interval = 1
+	// p.param.interleaved = 1
+	// p.param.color_space_internal = 82
 	return p
 }
 

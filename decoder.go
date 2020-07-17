@@ -32,10 +32,8 @@ func (d *Decoder) Init(param *Param, paramImage *ParamImage) {
 	C.gpujpeg_decoder_init(d.decoder, &param.param, &paramImage.param)
 }
 
-func (d *Decoder) SetOutput() {
-	C.gpujpeg_decoder_set_output_format(d.decoder, C.GPUJPEG_RGB,
-		C.GPUJPEG_444_U8_P012)
-	// or eg. GPUJPEG_YCBCR_JPEG and GPUJPEG_422_U8_P1020
+func (d *Decoder) SetOutput(cs ColorSpace, fmt PixelFormat) {
+	C.gpujpeg_decoder_set_output_format(d.decoder, uint32(cs), int32(fmt))
 }
 
 func (d *Decoder) Decode(image []byte) (data []byte, err error) {
