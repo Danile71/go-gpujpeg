@@ -13,6 +13,7 @@ const file = "test.jpg"
 
 func main() {
 	err := gpujpeg.InitDevice(0)
+
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		fmt.Println(err)

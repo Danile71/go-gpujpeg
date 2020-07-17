@@ -14,7 +14,7 @@ gogpujpeg_encoder create_encoder() {
     return gpujpeg_encoder_create(0);
 }
 
-uint8_t * encode(struct gpujpeg_encoder *encoder,gogpujpeg_parameters param, gogpujpeg_image_parameters param_image,uint8_t* data ,int *image_compressed_size) {
+uint8_t * gpuencode(struct gpujpeg_encoder *encoder,gogpujpeg_parameters param, gogpujpeg_image_parameters param_image,uint8_t* data ,int *image_compressed_size) {
     uint8_t* image_compressed = NULL;
 	gpujpeg_encoder_input encoder_input;
 	gpujpeg_encoder_input_set_image(&encoder_input, data);
