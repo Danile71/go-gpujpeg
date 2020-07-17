@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"time"
 
 	"github.com/Danile71/go-gpujpeg"
@@ -18,13 +19,14 @@ func main() {
 		return
 	}
 
-	imageParam, count, err := gpujpeg.ReadImageInfo(data)
+	imageParam, _, err := gpujpeg.ReadImageInfo(data)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
+	defer imageParam.Free()
 
-	fmt.Println("width", imageParam.Width(), imageParam.Height(), imageParam.PixelFormat(), imageParam.ColorSpace(), imageParam.CompCount(), count)
+	fmt.Println("image width", imageParam.Width(), " height", imageParam.Height())
 	start := time.Now()
 
 	decoder, err := gpujpeg.CreateDecoder()
@@ -34,13 +36,13 @@ func main() {
 	}
 	defer decoder.Free()
 
-	decoder.SetOutput(gpujpeg.GPUJPEG_YCBCR_JPEG, gpujpeg.GPUJPEG_420_U8_P0P1P2)
+	decoder.SetOutput(gpujpeg.GPUJPEG_RGB, gpujpeg.GPUJPEG_420_U8_P0P1P2)
 
 	result, err := decoder.Decode(data)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("result", len(result), time.Since(start))
-
+	fmt.Println(time.Since(start))
+	ioutil.WriteFile("result.rgb", result, os.ModePerm)
 }

@@ -17,7 +17,7 @@ import (
 )
 
 type Decoder struct {
-	decoder *C.gpujpeg_decoder
+	decoder C.gogpujpeg_decoder
 }
 
 func CreateDecoder() (*Decoder, error) {
@@ -29,7 +29,7 @@ func CreateDecoder() (*Decoder, error) {
 }
 
 func (d *Decoder) Init(param *Param, paramImage *ParamImage) {
-	C.gpujpeg_decoder_init(d.decoder, &param.param, &paramImage.param)
+	C.gpujpeg_decoder_init(d.decoder, param.param, paramImage.param)
 }
 
 func (d *Decoder) SetOutput(cs ColorSpace, fmt PixelFormat) {

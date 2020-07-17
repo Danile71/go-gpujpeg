@@ -72,7 +72,7 @@ func (d PixelFormat) String() string {
 }
 
 type ParamImage struct {
-	param C.gpujpeg_image_parameters
+	param C.gogpujpeg_image_parameters
 }
 
 func (p *ParamImage) Width() int {
@@ -116,19 +116,25 @@ func (p *ParamImage) SetPixelFormat(pf PixelFormat) {
 }
 
 func SetImageParam() *ParamImage {
-	p := &ParamImage{}
-	C.gpujpeg_image_set_default_parameters(&p.param)
+	p := &ParamImage{param: C.malloc_gpujpeg_image_parameters()}
+	C.gpujpeg_image_set_default_parameters(p.param)
 	return p
 }
 
 func ReadImageInfo(image []byte) (*ParamImage, int, error) {
-	p := &ParamImage{}
+	p := &ParamImage{param: C.malloc_gpujpeg_image_parameters()}
 
 	segment_count := C.int(0)
 
-	if C.gpujpeg_decoder_get_image_info((*C.uchar)(unsafe.Pointer(&image[0])), C.int(len(image)), &p.param, &segment_count) != C.int(0) {
+	if C.gpujpeg_decoder_get_image_info((*C.uchar)(unsafe.Pointer(&image[0])), C.int(len(image)), p.param, &segment_count) != C.int(0) {
 		return nil, 0, errors.New("Can't decode image info")
 	}
 
 	return p, int(segment_count), nil
+}
+
+func (p *ParamImage) Free() {
+	C.free_gpujpeg_image_parameters(p.param)
+	p.param = nil
+	p = nil
 }
