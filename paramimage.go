@@ -115,10 +115,10 @@ func (p *ParamImage) SetPixelFormat(pf PixelFormat) {
 	p.param.pixel_format = int32(pf)
 }
 
-func SetImageParam() *ParamImage {
-	p := &ParamImage{param: C.malloc_gpujpeg_image_parameters()}
+func SetImageParam() (p *ParamImage) {
+	p = &ParamImage{param: C.malloc_gpujpeg_image_parameters()}
 	C.gpujpeg_image_set_default_parameters(p.param)
-	return p
+	return
 }
 
 func ReadImageInfo(image []byte) (*ParamImage, int, error) {
